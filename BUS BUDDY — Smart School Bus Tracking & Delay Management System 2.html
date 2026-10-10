@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:5173/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284c7'&gt;&lt;path d='M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z'/&gt;&lt;/svg&gt;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BUS BUDDY - Smart School Bus Tracking &amp; Delay Management System by Team TANDEM SYSTEM (CBC 121)">
+    <title>BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System</title>
+    
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/css2" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style type="text/css" data-vite-dev-id="C:/Users/User/.gemini/antigravity-ide/scratch/bus-buddy/src/index.css">/* BUS BUDDY — Smart School Bus Tracking & Delay Management System */
+/* Design System & Aesthetic Tokens */
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+
+  --bg-primary: #090d16;
+  --bg-surface: #0f172a;
+  --bg-surface-elevated: #1e293b;
+  --bg-surface-glass: rgba(15, 23, 42, 0.85);
+
+  --border-subtle: rgba(148, 163, 184, 0.15);
+  --border-accent: rgba(20, 184, 166, 0.4);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --brand-teal: #14b8a6;
+  --brand-teal-light: #2dd4bf;
+  --brand-teal-glow: rgba(20, 184, 166, 0.35);
+
+  --brand-blue: #0284c7;
+  --brand-blue-light: #38bdf8;
+
+  --status-ontime: #10b981;
+  --status-delayed: #f59e0b;
+  --status-incident: #ef4444;
+  --status-inactive: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphism card utility */
+.glass-panel {
+  background: var(--bg-surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+}
+
+.glass-panel-elevated {
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 1rem;
+}
+
+/* Status Badges */
+.badge-ontime {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-delayed {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-incident {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.badge-neutral {
+  background: rgba(100, 116, 139, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+/* Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 0.4; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-ring 2.5s infinite ease-in-out;
+}
+
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+.ping-marker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #14b8a6;
+  animation: ping-soft 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  background: #0f172a !important;
+  font-family: var(--font-sans) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: #0f172a !important;
+}
+
+/* Responsive utility classes */
+.container-max {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+</style></head>
+  <body class="bg-slate-950 text-slate-100 antialiased font-sans selection:bg-teal-500 selection:text-white" style="overflow: unset;">
+    <div id="root"><div style="min-height: 100vh; display: flex; flex-direction: column;"><header style="position: sticky; top: 0px; z-index: 50; background: rgba(9, 13, 22, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(148, 163, 184, 0.15); padding: 0.75rem 1rem;"><div class="container-max" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;"><div style="display: flex; align-items: center; gap: 0.875rem;"><div style="width: 42px; height: 42px; border-radius: 0.75rem; background: linear-gradient(135deg, rgb(13, 148, 136) 0%, rgb(2, 132, 199) 100%); display: flex; align-items: center; justify-content: center; box-shadow: rgba(13, 148, 136, 0.35) 0px 4px 12px; color: rgb(255, 255, 255);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bus "><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle></svg></div><div><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; color: rgb(255, 255, 255);">BUS <span style="color: rgb(45, 212, 191);">BUDDY</span></span><span style="font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 0.35rem; background: rgba(2, 132, 199, 0.2); color: rgb(56, 189, 248); border: 1px solid rgba(2, 132, 199, 0.4);">CBC 121</span></div><div style="font-size: 0.75rem; color: rgb(148, 163, 184);">Every journey. Every minute matters.</div></div></div><nav style="display: flex; align-items: center; background: rgb(15, 23, 42); padding: 0.3rem; border-radius: 0.75rem; border: 1px solid rgba(148, 163, 184, 0.2);"><button style="display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: rgb(20, 184, 166); color: rgb(255, 255, 255); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check "><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg><span>Admin Control</span></button><button style="display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-compass "><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg><span>Driver Console</span></button><button style="display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone "><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg><span>Parent Portal</span></button></nav><div style="display: flex; align-items: center; gap: 0.75rem;"><div title="Connected to Flask + SQLite on http://localhost:5000/api (SQLite 3 disk database)" style="display: flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: rgb(52, 211, 153); background: rgba(16, 185, 129, 0.14); padding: 0.35rem 0.75rem; border-radius: 0.5rem; border: 1px solid rgba(16, 185, 129, 0.35); font-weight: 700;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database " style="color: rgb(45, 212, 191);"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg><span style="width: 7px; height: 7px; border-radius: 50%; background: rgb(16, 185, 129); box-shadow: rgb(16, 185, 129) 0px 0px 8px;"></span><span>FLASK + SQLITE (5000)</span></div><button title="View system alerts" style="position: relative; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 0.5rem; background: rgb(30, 41, 59); border: 1px solid rgba(148, 163, 184, 0.2); color: rgb(248, 250, 252); cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell "><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span style="position: absolute; top: -4px; right: -4px; background: rgb(239, 68, 68); color: rgb(255, 255, 255); font-size: 0.68rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px;">1</span></button></div></div></header><div style="border-bottom: 1px solid rgba(20, 184, 166, 0.3); background: linear-gradient(90deg, rgb(9, 19, 31) 0%, rgb(12, 26, 45) 50%, rgb(9, 19, 31) 100%); padding: 0.6rem 1rem; font-size: 0.85rem;"><div class="container-max" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;"><div style="display: flex; align-items: center; gap: 0.6rem;"><div style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.6rem; border-radius: 9999px; background: rgba(20, 184, 166, 0.2); border: 1px solid rgba(20, 184, 166, 0.4); color: rgb(45, 212, 191); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.05em;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles "><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>HACKATHON DEMO CONTROLS</div><span style="color: rgb(148, 163, 184); font-size: 0.8rem;">Active Trip: <strong style="color: rgb(248, 250, 252);">BB-101</strong></span><span style="padding: 0.15rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; background: rgba(16, 185, 129, 0.2); color: rgb(52, 211, 153);">IN_PROGRESS</span></div><div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;"><button title="Pause GPS movement" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.65rem; border-radius: 0.375rem; background: rgb(2, 132, 199); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(255, 255, 255); font-weight: 600; cursor: pointer; font-size: 0.75rem;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause "><rect width="4" height="16" x="6" y="4"></rect><rect width="4" height="16" x="14" y="4"></rect></svg>Pause GPS</button><button title="Step bus forward by 5%" style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.3rem 0.55rem; border-radius: 0.375rem; background: rgb(30, 41, 59); border: 1px solid rgba(148, 163, 184, 0.3); color: rgb(226, 232, 240); font-weight: 600; cursor: pointer; font-size: 0.75rem;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-fast-forward "><polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon></svg>Step +5%</button><button title="Edge Case A: Driver reports +10 min delay" style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border-radius: 0.375rem; background: rgba(245, 158, 11, 0.2); border: 1px solid rgb(245, 158, 11); color: rgb(251, 191, 36); font-weight: 600; cursor: pointer; font-size: 0.75rem;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle "><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>+10m Delay</button><button title="Edge Case B: Close Stop 3 (Ideal Homes) due to pipe repair" style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border-radius: 0.375rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgb(239, 68, 68); color: rgb(248, 113, 113); font-weight: 600; cursor: pointer; font-size: 0.75rem;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-xcircle "><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>Close Stop 3</button><button title="Edge Case C: Bus 101 breaks down -&gt; Admin assigns Bus 104" style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border-radius: 0.375rem; background: rgba(2, 132, 199, 0.2); border: 1px solid rgb(2, 132, 199); color: rgb(56, 189, 248); font-weight: 600; cursor: pointer; font-size: 0.75rem;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck "><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>Breakdown &amp; Replace</button><button title="Restore all sample data" style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.3rem 0.55rem; border-radius: 0.375rem; background: rgb(51, 65, 85); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(203, 213, 225); font-weight: 600; cursor: pointer; font-size: 0.75rem;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw "><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>Reset Demo</button></div></div></div><main class="container-max" style="flex: 1 1 0%; margin-top: 1.25rem;"><div style="display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem;"><div class="glass-panel" style="padding: 1.25rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;"><div><div style="display: flex; align-items: center; gap: 0.5rem;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check " style="color: rgb(20, 184, 166);"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg><h2 style="font-size: 1.5rem; font-weight: 800; color: rgb(248, 250, 252);">Transport Control Centre</h2></div><p style="font-size: 0.85rem; color: rgb(148, 163, 184); margin-top: 0.2rem;">Centralized dispatch, real-time fleet telemetry, and automated exception management.</p></div><div style="display: flex; align-items: center; background: rgb(9, 13, 22); padding: 0.25rem; border-radius: 0.625rem; border: 1px solid rgba(148, 163, 184, 0.15);"><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: rgb(20, 184, 166); color: rgb(255, 255, 255); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio "><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path></svg><span>Live Operations</span></button><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bus "><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle></svg><span>Buses Fleet</span></button><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-compass "><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg><span>Routes &amp; Stops</span></button><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users "><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Drivers</span></button><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck "><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg><span>Trips Dispatch</span></button><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: rgb(148, 163, 184); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.15s;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text "><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg><span>Incident Audit</span></button></div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem;"><div class="glass-panel" style="padding: 1.25rem;"><div style="display: flex; justify-content: space-between; color: rgb(148, 163, 184);"><span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Active Trips</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck " style="color: rgb(45, 212, 191);"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></div><div style="font-size: 1.85rem; font-weight: 800; margin-top: 0.4rem; color: rgb(248, 250, 252);">1</div><div style="font-size: 0.75rem; color: rgb(52, 211, 153); margin-top: 0.2rem;">1 buses in live service</div></div><div class="glass-panel" style="padding: 1.25rem;"><div style="display: flex; justify-content: space-between; color: rgb(148, 163, 184);"><span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Corridor Delays</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle " style="color: rgb(100, 116, 139);"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></div><div style="font-size: 1.85rem; font-weight: 800; margin-top: 0.4rem; color: rgb(248, 250, 252);">0</div><div style="font-size: 0.75rem; color: rgb(148, 163, 184); margin-top: 0.2rem;">All corridors on schedule</div></div><div class="glass-panel" style="padding: 1.25rem;"><div style="display: flex; justify-content: space-between; color: rgb(148, 163, 184);"><span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Critical Incidents</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-circle " style="color: rgb(100, 116, 139);"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg></div><div style="font-size: 1.85rem; font-weight: 800; margin-top: 0.4rem; color: rgb(248, 250, 252);">0</div><div style="font-size: 0.75rem; color: rgb(52, 211, 153); margin-top: 0.2rem;">0 unresolved breakdowns</div></div><div class="glass-panel" style="padding: 1.25rem;"><div style="display: flex; justify-content: space-between; color: rgb(148, 163, 184);"><span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Fleet Availability</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bus " style="color: rgb(56, 189, 248);"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle></svg></div><div style="font-size: 1.85rem; font-weight: 800; margin-top: 0.4rem; color: rgb(248, 250, 252);">3 / 4</div><div style="font-size: 0.75rem; color: rgb(56, 189, 248); margin-top: 0.2rem;">Standby buses ready for dispatch</div></div></div><div style="display: grid; grid-template-columns: minmax(0px, 1.8fr) minmax(320px, 1fr); gap: 1.25rem;"><div class="glass-panel" style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;"><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem;"><div><h3 style="font-size: 1.15rem; font-weight: 700; color: rgb(248, 250, 252);">Live Telemetry Map — Southwest Express: GAT Campus to Vijayanagar</h3><div style="font-size: 0.78rem; color: rgb(148, 163, 184);">Bus: <b style="color: rgb(241, 245, 249);">KA-05-EB-1024</b> • Driver: <b style="color: rgb(241, 245, 249);">Ramesh Kumar</b></div></div><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="font-size: 0.8rem; color: rgb(148, 163, 184);">Monitoring:</span><select style="background: rgb(9, 13, 22); border: 1px solid rgba(148, 163, 184, 0.25); color: rgb(248, 250, 252); padding: 0.35rem 0.65rem; border-radius: 0.5rem; font-size: 0.8rem; cursor: pointer;"><option value="TRIP-101">BB-101 (IN_PROGRESS)</option><option value="TRIP-102">BB-102 (SCHEDULED)</option></select></div></div><div style="border-radius: 0.75rem; overflow: hidden; border: 1px solid rgba(148, 163, 184, 0.2);"><div style="position: relative; width: 100%; height: 460px;"><div class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="width: 100%; height: 100%; position: relative;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(130px, 286px, 0px) scale(0.5);"></div><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(130px, 286px, 0px) scale(1);"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3798.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-70px, -307px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3798(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(186px, -307px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3799.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-70px, -51px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3799(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(186px, -51px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3798(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-326px, -307px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3798(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(442px, -307px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3799(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-326px, -51px, 0px); opacity: 1;"><img alt="" src="./BUS BUDDY — Smart School Bus Tracking &amp; Delay Management System 2_files/3799(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(442px, -51px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"><svg pointer-events="none" class="leaflet-zoom-animated" width="892" height="552" viewBox="-74 -46 892 552" style="transform: translate3d(-74px, -46px, 0px);"><g><path class="leaflet-interactive" stroke="#0d9488" stroke-opacity="0.85" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M316 401L329 368L336 334L342 318L351 282L360 268L371 255L415 213L427 198L406 186L383 168L389 144L405 59"></path></g></svg></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(316px, 401px, 0px); z-index: 401;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            
+            <span style="position:relative; z-index:2;">✓</span>
+          </div>
+        </div><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(336px, 334px, 0px); z-index: 334;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            
+            <span style="position:relative; z-index:2;">✓</span>
+          </div>
+        </div><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(351px, 282px, 0px); z-index: 282;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            
+            <span style="position:relative; z-index:2;">✓</span>
+          </div>
+        </div><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(384px, 242px, 0px); z-index: 242;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            
+            <span style="position:relative; z-index:2;">✓</span>
+          </div>
+        </div><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(427px, 198px, 0px); z-index: 198;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            
+            <span style="position:relative; z-index:2;">✓</span>
+          </div>
+        </div><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(383px, 168px, 0px); z-index: 168;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            
+            <span style="position:relative; z-index:2;">✓</span>
+          </div>
+        </div><div class="leaflet-marker-icon custom-stop-marker leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -14px; margin-top: -14px; width: 28px; height: 28px; transform: translate3d(405px, 59px, 0px); z-index: 59;">
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #14b8a6;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+            <div class="ping-marker" style="background:#14b8a6"></div>
+            <span style="position:relative; z-index:2;">7</span>
+          </div>
+        </div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(1.50022e+06px, 972539px, 0px) scale(4096);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="http://localhost:5173/#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="http://localhost:5173/#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com/" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a> <span aria-hidden="true">|</span> © <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</div></div></div></div></div></div><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border-radius: 0.75rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.15); gap: 0.75rem;"><span style="font-size: 0.82rem; color: rgb(148, 163, 184); font-weight: 600;">Dispatcher Interventions:</span><div style="display: flex; flex-wrap: wrap; gap: 0.5rem;"><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.5rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: rgb(248, 113, 113); font-size: 0.78rem; font-weight: 600; cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-xcircle "><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>Block Stop (Edge Case B)</button><button style="display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.5rem; background: rgba(2, 132, 199, 0.15); border: 1px solid rgba(2, 132, 199, 0.4); color: rgb(56, 189, 248); font-size: 0.78rem; font-weight: 600; cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck "><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>Assign Replacement Bus (Edge Case C)</button></div></div></div><div class="glass-panel" style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;"><div style="display: flex; align-items: center; justify-content: space-between;"><h3 style="font-size: 1.15rem; font-weight: 700; color: rgb(248, 250, 252);">Corridor Stop ETAs</h3><span style="font-size: 0.75rem; color: rgb(20, 184, 166); font-weight: 600;">1 Stops Remaining</span></div><div style="flex: 1 1 0%; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; max-height: 480px; padding-right: 0.25rem;"><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.12);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(16, 185, 129); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">1</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">GAT Campus Main Gate (Origin)</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(100, 116, 139);">Departed</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>Already departed</span></div></div><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.12);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(16, 185, 129); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">2</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">Rajarajeshwari Nagar Temple Arch</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(100, 116, 139);">Departed</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>Already departed</span></div></div><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.12);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(16, 185, 129); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">3</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">Ideal Homes Township Circle</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(100, 116, 139);">Departed</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>Already departed</span></div></div><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.12);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(16, 185, 129); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">4</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">BEML Layout 5th Stage</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(100, 116, 139);">Departed</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>Already departed</span></div></div><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.12);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(16, 185, 129); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">5</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">Mysore Road Metro Station</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(100, 116, 139);">Departed</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>Already departed</span></div></div><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.12);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(16, 185, 129); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">6</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">Nayandahalli Junction (Ring Road)</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(100, 116, 139);">Departed</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>Already departed</span></div></div><div style="padding: 0.85rem; border-radius: 0.625rem; background: rgba(20, 184, 166, 0.12); border: 1px solid rgba(20, 184, 166, 0.4);"><div style="display: flex; align-items: center; justify-content: space-between;"><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 22px; height: 22px; border-radius: 50%; background: rgb(51, 65, 85); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: rgb(255, 255, 255);">7</span><strong style="font-size: 0.85rem; color: rgb(248, 250, 252);">Vijayanagar TTMC Terminal</strong></div><span style="font-size: 0.8rem; font-weight: 700; color: rgb(45, 212, 191);">01:22 AM</span></div><div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.4rem; font-size: 0.75rem; color: rgb(148, 163, 184);"><span>1.07 km remaining (3m)</span></div></div></div></div></div></div></main><footer style="margin-top: 3rem; border-top: 1px solid rgba(148, 163, 184, 0.15); background: rgb(7, 10, 18); padding: 2.5rem 1rem; color: rgb(148, 163, 184); font-size: 0.85rem;"><div class="container-max" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 2rem;"><div><div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;"><span style="font-size: 1.15rem; font-weight: 800; color: rgb(255, 255, 255); font-family: var(--font-display);">BUS <span style="color: rgb(45, 212, 191);">BUDDY</span></span><span style="font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 0.35rem; background: rgba(20, 184, 166, 0.2); color: rgb(45, 212, 191); border: 1px solid rgba(20, 184, 166, 0.4);">CBC 121</span></div><p style="color: rgb(203, 213, 225); line-height: 1.5;">Every journey. Every minute matters. Smart School Bus Tracking &amp; Delay Management System built for national transportation reliability.</p><div style="margin-top: 0.75rem; font-size: 0.75rem; color: rgb(100, 116, 139);">Domain: Software and Web Development</div></div><div><h4 style="font-size: 0.9rem; font-weight: 700; color: rgb(248, 250, 252); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award " style="color: rgb(251, 191, 36);"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>Hackathon Information</h4><ul style="list-style: none; display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.8rem;"><li>Hackathon: <strong style="color: rgb(255, 255, 255);">CBC 2.0 (2026)</strong></li><li>Team Name: <strong style="color: rgb(56, 189, 248);">TANDEM SYSTEM</strong></li><li>Team Identifier: <strong style="color: rgb(45, 212, 191);">CBC 121</strong></li><li>Institution: <strong style="color: rgb(203, 213, 225);">Global Academy of Technology, Bengaluru</strong></li></ul></div><div><h4 style="font-size: 0.9rem; font-weight: 700; color: rgb(248, 250, 252); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users " style="color: rgb(168, 85, 247);"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Team Members</h4><ul style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.82rem;"><li style="color: rgb(226, 232, 240); font-weight: 600;">• Manasa Satish</li><li style="color: rgb(226, 232, 240); font-weight: 600;">• Lathika G R</li><li style="color: rgb(226, 232, 240); font-weight: 600;">• Prakruthi R</li></ul></div><div><h4 style="font-size: 0.9rem; font-weight: 700; color: rgb(248, 250, 252); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code2 " style="color: rgb(52, 211, 153);"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>System Architecture</h4><div style="font-size: 0.78rem; color: rgb(148, 163, 184); line-height: 1.6;"><div>• Deterministic Geodesic Polyline Simulation</div><div>• Real-Time Dynamic ETA Engine with Delay Compensation</div><div>• Multi-Role State Machine &amp; Single-Source Persistence</div><div>• High-Precision Leaflet &amp; OpenStreetMap Tiles</div></div></div></div><div class="container-max" style="border-top: 1px solid rgba(148, 163, 184, 0.1); padding-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; font-size: 0.75rem; color: rgb(100, 116, 139);"><div>© 2026 BUS BUDDY by Team TANDEM SYSTEM. Developed for CBC 2.0 at Global Academy of Technology.</div><div style="display: flex; align-items: center; gap: 0.4rem;"><span>Crafted with precision &amp; care for student safety</span></div></div></footer></div></div>
+    <script type="module" src="http://localhost:5173/src/main.tsx?t=1791645799768"></script>
+  
+
+</body></html>
